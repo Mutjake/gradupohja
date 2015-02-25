@@ -1,0 +1,71 @@
+%!TEX TS-program = xelatex
+
+\documentclass[a4paper,english,12pt]{article}
+\usepackage{calc}
+%\usepackage{lipsum}
+\usepackage{tol}
+
+\usepackage{tocloft}
+
+\usepackage[font={small, sf}, labelfont=bf]{caption}
+\usepackage{chngcntr}
+\counterwithout{figure}{section}
+
+\author{}
+\email{}
+\studentno{}
+\title{}
+\course{Master's Thesis}
+\hypersetupdefault
+
+\begin{document}
+
+\maketitle
+
+\setcounter{page}{2}
+
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+\newpage
+
+\section*{Foreword}
+\addcontentsline{toc}{section}{Foreword}
+\newpage
+
+\section*{Abbreviations}
+\addcontentsline{toc}{section}{Abbreviations}
+\newpage
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % dots to seections
+\renewcommand{\cftsecfont}{\normalfont} % normal font for sections instead of bolded
+\renewcommand{\cftsecpagefont}{\normalfont} % don't bold section's page numbers
+\renewcommand{\cftbeforesecskip}{0pt} % no lineskips between sections
+
+%\rewewcommand{\cftbeforetoctitleskip}{0pt}
+%\rewewcommand{\cftaftertoctitleskip}{0pt}
+\renewcommand{\cftdotsep}{0}
+
+% not needed?
+\renewcommand{\cfttoctitlefont}{\fontspec{Helvetica Neue}\Large\mdseries}
+%\renewcommand{\cftaftertoctitleskip}{0pt}
+%\renewcommand{\cftbeforetoctitleskip}{0pt}
+\addtocontents{toc}{\protect\thispagestyle{fancy}} % to let the page number be on the right place
+
+\newpage
+
+\tableofcontents
+
+\addcontentsline{toc}{section}{Contents}
+
+\newpage
+\section{Introduction}
+
+\newpage
+
+\bibliographystyle{apacite}
+%\nocite{*}
+
+\bibliography{gradu} %gradu.bib
+% REMINDER: If biblography causes hassle: Run xelatex-bibtex-xelatex-xelatex on this file on texworks/similar -_-
+
+\end{document}

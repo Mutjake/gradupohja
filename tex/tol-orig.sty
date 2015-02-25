@@ -1,0 +1,136 @@
+% This is a style file to be used in publications of the Department of Information
+% Processing Science in University of Oulu (http://www.tol.oulu.fi).
+% It tries to mimic the appearance of the required, official document styling, 
+% but is far from complete. All help is appreciated...
+%
+% NOTE: This is barely usable style to be used for creating documents for TOL classes.
+% More style fixes coming hopefully someday.
+%
+% At the moment this style does the following things:
+% - Change the page layout to follow the correct style
+% - Change the title page to follow the correct style
+% - Sets up the correct citation settings (apacite-style)
+% - Translates ``et al'' to be ``ja muut''
+% - Adds \citeapos to produce output like ``Foo et al (2009)''
+% - Adds pagebreak before references page
+%
+% TODO:
+% - Styling of lists, tables, image settings, ..
+% -
+%
+% Usage:
+% 1) Copy this file and oylogoe.png (rip it from the .doc file) to the directory where your tex file is
+% 2) Add \usepackage{tol} to your tex document
+% 3) Define \author, \email, \course, \studentno and \title, and call \hypersetupdefault 
+%    if you want default pdf settings (with title like Course - Title and author(s) set)
+% 4) Call \maketitle after beginning the document environment
+% 5) Call \bibliography{yourbib} just like normally to generate reference list
+% 6) ???
+% 7) PROFIT!
+%
+% Author: Teemu Rytilahti
+% Comments, ideas and patches welcome!
+
+
+\usepackage[pdftex]{hyperref} %pdf output
+\usepackage{graphicx} %images
+\usepackage{chngpage} %changing layout per page basis, needed for title page
+
+% TODO adapt to not to print chapter when not available
+% FIXME are these really needed anymore?
+%\renewcommand\thesection{\thechapter.\arabic{section}.}
+%\renewcommand\thesubsection{\thesection\arabic{subsection}.}
+%\renewcommand\thesubsubsection{\thesubsection\arabic{subsubsection}.}
+
+%finnish language support
+\usepackage[finnish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%basic settings
+\usepackage[a4paper,margin=2cm,left=4cm]{geometry}
+\setlength{\parskip}{12pt} % line between paragraphs
+\setlength{\parindent}{0pt} % don't indent paragraphs
+
+%general layout
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[RE,RO]{\thepage}
+
+\setlength{\headheight}{24pt}
+
+%section layout
+\let\stdsection\section
+\renewcommand\section{\newpage\vspace*{-10pt}\stdsection}
+\let\stdsubsection\subsection
+\renewcommand\subsection{\vspace*{-10pt}\stdsubsection}
+
+\renewcommand\thesection{\arabic{section}.}
+\renewcommand\thesubsection{\thesection\arabic{subsection}}
+\renewcommand\thesubsubsection{.\thesubsection\arabic{subsubsection}}
+
+%fonts
+\usepackage{times}
+\usepackage{sectsty}
+\sectionfont{\normalfont\Large\fontfamily{phv}\selectfont}
+\subsectionfont{\normalfont\large\fontfamily{phv}\selectfont}
+
+%citations using apacite
+\usepackage{apacite}
+\bibliographystyle{apacite}
+\def\citeapos#1{\citeauthor{#1} \citeyear{#1}}
+
+%page break before references page
+\let\stdbibliography\bibliography
+\renewcommand\bibliography{\newpage\stdbibliography}
+
+%ability to set variables for titlepage
+\def\course{\def\course}
+\def\email{\def\email}
+\def\studentno{\def\studentno}
+\def\title{\def\title}
+
+\def\maketitle{{
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{adjustwidth}{-2cm}{0cm}
+\vfill
+
+\vspace*{4.7cm}
+\begin{center}
+ \includegraphics[height=1.11in,width=2.44in]{oylogo.png} \\
+ \mbox{ }\\
+ \vspace*{2.5cm}
+ \begin{LARGE}\fontfamily{phv}\selectfont\textbf{\title}\end{LARGE} \\
+\end{center}
+
+\vfill
+
+\begin{flushright}
+\parbox[l][4cm]{6cm}{
+
+ Oulun Yliopisto \\
+ Tietojenkaesittelytieteiden laitos \\
+ \course \\
+ \mbox{ }\\
+ \@author \ (\studentno) \\
+ \email \\
+ \@date
+
+}
+\end{flushright}
+\end{adjustwidth}
+
+\end{titlepage}}
+}
+
+\def\hypersetupdefault{
+\hypersetup{
+  pdfauthor={\@author},
+  pdftitle={\course - \title},
+  colorlinks={false},
+  pdfborder={0 0 0 0},
+}
+}
